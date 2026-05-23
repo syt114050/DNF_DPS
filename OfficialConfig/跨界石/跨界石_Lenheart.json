@@ -1,0 +1,9 @@
+{
+    "CrossoverStr1": "装备栏1号位没有装备..",
+    "CrossoverStr2": "跨界失败，请检查一下账号金库是否没有开启或者没有空位",
+    "CrossoverStr3": "跨界失败",
+    "CrossoverStr4": "跨界成功,已经装备栏第一格的 [%s] 转移至账号金库",
+    "CrossoverStr5": "跨界失败, [%s] 不可以跨界",
+    "CrossoverId": 17577,
+    "NoCrossIdArr" : [26058]
+}

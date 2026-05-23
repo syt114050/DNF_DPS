@@ -1,0 +1,53 @@
+
+
+{
+    "config_meta": {
+      "comment": "转职道具功能配置表 v1.2",
+      "author": "System",
+      "create_date": "2024-05-14"
+    },
+  
+    "class_change_items": {
+      "8016": {
+        "job": 7,
+        "grow": 1,
+        "comment": "男气功"
+      },
+      "8017": {
+        "job": 7,
+        "grow": 3,
+        "comment": "男街霸"
+      },
+      "8018": {
+        "job": 7,
+        "grow": 2,
+        "comment": "男散打"
+      },
+      "8019": {
+        "job": 7,
+        "grow": 4,
+        "comment": "男柔道"
+      },
+      "2024051416": {
+        "job": 9,
+        "grow": 1,
+        "comment": "驭剑士"
+      },
+      "2024051417": {
+        "job": 9,
+        "grow": 3,
+        "comment": "契魔者"
+      },
+      "2024051419": {
+        "job": 8,
+        "grow": 1,
+        "comment": "元素爆破师"
+      },
+      "2024051420": {
+        "job": 8,
+        "grow": 2,
+        "comment": "冰结师"
+      }
+    }
+  }
+  
