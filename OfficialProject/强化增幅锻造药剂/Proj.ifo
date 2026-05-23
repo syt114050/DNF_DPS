@@ -1,0 +1,11 @@
+{
+    "ProjectName": "强化增幅锻造药剂",
+    "ProjectDescribe": "使用药剂或持有指定物品时增加强化/增幅/锻造概率",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "强化增幅锻造药剂配置_nangua.json",
+    "ProjectFiles": [
+        "强化增幅锻造药剂.nut"
+    ],
+    "ProjectRunFunc": "_Dps_Increase_probability_Main_"
+}

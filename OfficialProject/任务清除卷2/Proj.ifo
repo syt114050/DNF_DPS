@@ -1,0 +1,12 @@
+{
+    "ProjectName": "任务清除卷2",
+    "ProjectDescribe": "清理各类型任务以及重置相关任务,除了7577类道具 也可以使用礼包类道具触发",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "任务相关配置_2.json",
+    "ProjectFiles": [
+        "任务清除卷.nut"
+    ],
+    "ProjectIcon":"http://103.36.223.176:5244/d/DP_S/logo2.png?sign=aH3AjsyJgmomCqT3To_QfDY6a2RlSI-T3eUmtW0raoA=:0",
+    "ProjectRunFunc": "_Dps_QuestInfo_nangua_Main_2"
+}

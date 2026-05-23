@@ -1,0 +1,11 @@
+{
+    "ProjectName": "多倍泡点",
+    "ProjectDescribe": "玩家持有指定物品时，在指定城镇区域挂机可获得多倍泡点奖励，并有机率触发随机大奖，中奖全服公告",
+    "ProjectAuthor": "Claude",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "多倍泡点配置.json",
+    "ProjectFiles": [
+        "多倍泡点.nut"
+    ],
+    "ProjectRunFunc": "_Dps_MultiBonus_Main_"
+}

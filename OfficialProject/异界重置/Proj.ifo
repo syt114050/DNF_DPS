@@ -1,0 +1,11 @@
+{
+    "ProjectName": "异界重置",
+    "ProjectDescribe": "异界重置",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.1,
+    "ProjectConfig": "异界重置_Lenheart.json",
+    "ProjectFiles": [
+        "异界重置.nut"
+    ],
+    "ProjectRunFunc": "_Dps_MapReset_Main_"
+}

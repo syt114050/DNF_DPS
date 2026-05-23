@@ -1,0 +1,11 @@
+{
+    "ProjectName": "清理点券付费错误",
+    "ProjectDescribe": "定时清理付费错误。",
+    "ProjectAuthor": "zz",
+    "ProjectVersion": 1.2,
+    "ProjectConfig": "清理付费错误.json",
+    "ProjectFiles": [
+        "清理点券付费错误.nut"
+    ],
+    "ProjectRunFunc": "_Dps_CleanUpBillingErrors_Main_"
+}

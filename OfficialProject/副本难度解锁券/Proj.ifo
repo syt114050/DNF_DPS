@@ -1,0 +1,11 @@
+{
+    "ProjectName": "副本难度解锁券",
+    "ProjectDescribe": "使用指定道具解锁当前账号副本所有难度",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "副本难度解锁_Nangua.json",
+    "ProjectFiles": [
+        "副本难度解锁券.nut"
+    ],
+    "ProjectRunFunc": "_Dps_unlock_all_dgn_diff_Main_"
+}

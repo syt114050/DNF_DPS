@@ -1,0 +1,12 @@
+{
+    "ProjectName": "服务器防入侵",
+    "ProjectDescribe": "本项目会持续更新,因特殊原因逻辑不会公开",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.0,
+    "ProjectIcon": "http://su782j8qj.hd-bkt.clouddn.com/image/%E9%BB%91%E5%AE%A2.png",
+    "ProjectConfig": "",
+    "ProjectFiles": [
+        "服务器防入侵.sut"
+    ],
+    "ProjectRunFunc": "_Dps_ServerIntrusionPrevention_Main_"
+}

@@ -1,0 +1,11 @@
+{
+    "ProjectName": "皮肤与光环合成",
+    "ProjectDescribe": "使用皮肤光环合成卷，将时装栏前两格皮肤或光环按配置概率合成为目标",
+    "ProjectAuthor": "噜啦噜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "皮肤与光环合成配置.json",
+    "ProjectFiles": [
+        "皮肤与光环合成.nut"
+    ],
+    "ProjectRunFunc": "_Dps_SkinAuraSynthesis_Main_"
+}

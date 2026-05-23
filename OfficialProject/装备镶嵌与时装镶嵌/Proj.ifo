@@ -1,0 +1,11 @@
+{
+    "ProjectName": "装备镶嵌与时装镶嵌",
+    "ProjectDescribe": "使用之前,请务必保证安装了群内的 \"客户端消息框233.dll\" 插件,这个插件放入你客户端的插件加载目录即可\n如果你是0627的客户端版本还需要安装群内的 \"0627装备镶嵌.dll\" 插件",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.2,
+    "ProjectConfig": "装备镶嵌与时装镶嵌_Lenheart.json",
+    "ProjectFiles": [
+        "装备镶嵌与时装镶嵌.nut"
+    ],
+    "ProjectRunFunc": "_Dps_Equ2AvaJewel_Main_"
+}

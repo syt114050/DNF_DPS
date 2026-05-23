@@ -1,0 +1,11 @@
+{
+    "ProjectName": "道具接取任务",
+    "ProjectDescribe": "使用道具直接接取特定任务",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "道具接取任务.json",
+    "ProjectFiles": [
+        "道具接取任务.nut"
+    ],
+    "ProjectRunFunc": "_Dps_DJJQRW_Main_"
+}

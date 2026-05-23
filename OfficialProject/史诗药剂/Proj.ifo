@@ -1,0 +1,11 @@
+{
+    "ProjectName": "史诗药剂",
+    "ProjectDescribe": "在单人深渊中使用指定ID的道具使玩家获得爆率加成。(组队无效)，史诗药剂道具的冷却时间和持续时间需一致！！",
+    "ProjectAuthor": "倾泪寒 & 南瓜",
+    "ProjectVersion": 1.7,
+    "ProjectConfig": "史诗药剂配置文件.json",
+    "ProjectFiles": [
+        "史诗药剂.nut"
+    ],
+    "ProjectRunFunc": "_Dps_EpicPotion_Main_"
+}

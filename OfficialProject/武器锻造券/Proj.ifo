@@ -1,0 +1,11 @@
+{
+    "ProjectName": "武器锻造券",
+    "ProjectDescribe": "提升武器的锻造等级",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "武器锻造券配置_Nangua.json",
+    "ProjectFiles": [
+        "武器锻造券.nut"
+    ],
+    "ProjectRunFunc": "_Dps_UpdateWeaponSeparate_Main_"
+}

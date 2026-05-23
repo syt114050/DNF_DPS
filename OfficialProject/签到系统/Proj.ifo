@@ -1,0 +1,11 @@
+{
+  "ProjectName": "签到系统",
+  "ProjectDescribe": "玩家在聊天框输入'签到'即可获得每日奖励",
+  "ProjectAuthor": "lulu",
+  "ProjectVersion": 1.0,
+  "ProjectConfig": "签到系统配置.json",
+  "ProjectFiles": [
+    "签到系统.nut"
+  ],
+  "ProjectRunFunc": "_Dps_CheckInSystem_Main_"
+}

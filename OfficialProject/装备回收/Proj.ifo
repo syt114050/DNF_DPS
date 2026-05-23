@@ -1,0 +1,11 @@
+{
+    "ProjectName": "装备回收",
+    "ProjectDescribe": "装备回收,根据指定回收的ID奖励随机数量的奖励，以及根据品级以及装备等级进行回收给与奖励",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.4,
+    "ProjectConfig": "装备回收配置_Nangua.json",
+    "ProjectFiles": [
+        "装备回收.nut"
+    ],
+    "ProjectRunFunc": "_Dps_RecycleItem_Main_"
+}

@@ -1,0 +1,11 @@
+{
+    "ProjectName": "交易邮件播报",
+    "ProjectDescribe": "交易邮件播报",
+    "ProjectAuthor": "巅峰 & 倾泪寒",
+    "ProjectVersion": 1.2,
+    "ProjectConfig": "交易邮件播报.json",
+    "ProjectFiles": [
+        "交易邮件播报.nut"
+    ],
+    "ProjectRunFunc": "_Dps_JYYJBB_Main_"
+}

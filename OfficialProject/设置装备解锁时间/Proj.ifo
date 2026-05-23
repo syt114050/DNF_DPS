@@ -1,0 +1,11 @@
+{
+    "ProjectName": "设置装备解锁时间",
+    "ProjectDescribe": "设置装备的解锁时间",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.1,
+    "ProjectConfig": "设置装备解锁时间_Lenheart.json",
+    "ProjectFiles": [
+        "设置装备解锁时间.nut"
+    ],
+    "ProjectRunFunc": "_Dps_SetEquipmentUnlockTime_Main_"
+}

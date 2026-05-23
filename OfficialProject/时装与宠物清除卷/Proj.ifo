@@ -1,0 +1,11 @@
+{
+    "ProjectName": "时装与宠物清除卷",
+    "ProjectDescribe": "通过指定ID的道具，将装备背包第前两行的时装或宠物清除。",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.3,
+    "ProjectConfig": "时装与宠物清除卷_Lenheart.json",
+    "ProjectFiles": [
+        "时装与宠物清除卷.nut"
+    ],
+    "ProjectRunFunc": "_Dps_FashionAndPetClearanceRoll_Main_"
+}

@@ -1,0 +1,11 @@
+{
+    "ProjectName": "光环回收",
+    "ProjectDescribe": "使用光环回收卷，将时装栏(类型2)指定范围内的光环按配置规则回收为奖励道具，支持指定ID匹配模式",
+    "ProjectAuthor": "Claude",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "光环回收配置.json",
+    "ProjectFiles": [
+        "光环回收.nut"
+    ],
+    "ProjectRunFunc": "_Dps_AuraRecycle_Main_"
+}

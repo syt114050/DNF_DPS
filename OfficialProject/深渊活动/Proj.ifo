@@ -1,0 +1,11 @@
+{
+    "ProjectName": "深渊活动",
+    "ProjectDescribe": "定时开启深渊活动,获得指定物品时获得奖励",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "深渊活动配置_nangua.json",
+    "ProjectFiles": [
+        "深渊活动.nut"
+    ],
+    "ProjectRunFunc": "_Dps_Start_Hellparty_Event_Main_"
+}

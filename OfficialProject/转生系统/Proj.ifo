@@ -1,0 +1,12 @@
+
+{
+    "ProjectName": "转生系统",
+    "ProjectDescribe": "使用转生素材道具触发转生功能，获得对应身份和奖励",
+    "ProjectAuthor": "lulu & 倾泪寒",
+    "ProjectVersion": 1.3,
+    "ProjectConfig": "转生系统配置.json",
+    "ProjectFiles": [
+        "转生系统.nut"
+    ],
+    "ProjectRunFunc": "_Dps_RebirthSystem_Main_"
+}

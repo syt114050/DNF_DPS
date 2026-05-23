@@ -1,0 +1,11 @@
+{
+    "ProjectName": "GM便捷操作台",
+    "ProjectDescribe": "本项目提供了许多GM的便捷操作 方便平时调试或写代码 \n输入'//' + 设定的指令即可执行逻辑 ",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "GM便捷操作台_Lenheart.json",
+    "ProjectFiles": [
+        "GM便捷操作台.nut"
+    ],
+    "ProjectRunFunc": "_Dps_GmConvenienceConsole_Main_"
+}

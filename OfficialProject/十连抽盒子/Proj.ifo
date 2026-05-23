@@ -1,0 +1,11 @@
+{
+    "ProjectName": "十连抽盒子",
+    "ProjectDescribe": "消耗指定道具，执行10次加权随机抽奖，支持幸运值保底、全服公告、固定追加奖励、背包满后邮件发送",
+    "ProjectAuthor": "Claude",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "十连抽盒子配置.json",
+    "ProjectFiles": [
+        "十连抽盒子.nut"
+    ],
+    "ProjectRunFunc": "_Dps_Box10_Main_"
+}

@@ -1,0 +1,11 @@
+{
+    "ProjectName": "邮件金币去除验证",
+    "ProjectDescribe": "去除了发送邮件中有金币会触发验证码的验证。",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "",
+    "ProjectFiles": [
+        "邮件金币去除验证.nut"
+    ],
+    "ProjectRunFunc": "_Dps_EmailCoinRemovalVerification_Main_"
+}

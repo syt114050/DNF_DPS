@@ -1,0 +1,11 @@
+{
+    "ProjectName": "宠物装备回收",
+    "ProjectDescribe": "使用宠物装备回收卷，将宠物栏(类型7)指定范围内的宠物装备按配置规则回收为奖励道具",
+    "ProjectAuthor": "噜啦噜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "宠物装备回收配置.json",
+    "ProjectFiles": [
+        "宠物装备回收.nut"
+    ],
+    "ProjectRunFunc": "_Dps_PetEquipRecycle_Main_"
+}

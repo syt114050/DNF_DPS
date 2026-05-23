@@ -1,0 +1,11 @@
+{
+    "ProjectName": "时装与光环回收",
+    "ProjectDescribe": "使用时装光环回收卷，将时装栏(类型2)指定范围内的皮肤/光环按配置规则回收为奖励道具，支持指定ID和品级+等级两种匹配模式",
+    "ProjectAuthor": "Claude",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "时装与光环回收配置.json",
+    "ProjectFiles": [
+        "时装与光环回收.nut"
+    ],
+    "ProjectRunFunc": "_Dps_FashionRecycle_Main_"
+}

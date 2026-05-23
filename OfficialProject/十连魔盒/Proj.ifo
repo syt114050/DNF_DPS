@@ -1,0 +1,11 @@
+{
+    "ProjectName": "十连魔盒",
+    "ProjectDescribe": "使用魔盒道具，按权重随机获得奖励，支持保底机制、全服公告、背包满后邮件发送",
+    "ProjectAuthor": "Claude",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "十连魔盒配置.json",
+    "ProjectFiles": [
+        "十连魔盒.nut"
+    ],
+    "ProjectRunFunc": "_Dps_MagicBox_Main_"
+}

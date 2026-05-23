@@ -1,0 +1,11 @@
+{
+    "ProjectName": "随机附魔",
+    "ProjectDescribe": "使用随机附魔道具时，遍历背包槽位9~58，找到已附魔的装备后随机替换为同卡片池中的另一张怪物卡片，支持排除当前附魔值",
+    "ProjectAuthor": "Claude",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "随机附魔配置.json",
+    "ProjectFiles": [
+        "随机附魔.nut"
+    ],
+    "ProjectRunFunc": "_Dps_RandomEnchant_Main_"
+}

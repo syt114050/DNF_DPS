@@ -1,0 +1,11 @@
+{
+    "ProjectName": "上线自动完成任务",
+    "ProjectDescribe": "上线自动完成任务",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "上线自动完成任务_Lenheart.json",
+    "ProjectFiles": [
+        "上线自动完成任务.nut"
+    ],
+    "ProjectRunFunc": "_Dps_AutomaticallyCompleteTasksOnline_Main_"
+}

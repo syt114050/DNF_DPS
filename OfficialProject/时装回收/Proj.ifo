@@ -1,0 +1,11 @@
+{
+    "ProjectName": "时装回收",
+    "ProjectDescribe": "使用时装回收卷，将时装栏(类型2)指定范围内的时装按配置规则回收为奖励道具，支持指定ID匹配模式",
+    "ProjectAuthor": "Claude",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "时装回收配置.json",
+    "ProjectFiles": [
+        "时装回收.nut"
+    ],
+    "ProjectRunFunc": "_Dps_FashionOnly_Main_"
+}

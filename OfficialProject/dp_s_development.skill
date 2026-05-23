@@ -1,0 +1,957 @@
+# DP-S Game Server Plugin Development Skill
+
+## 🎯 框架架构概述
+
+### 整体架构层次
+```
+MyProject/ (用户自定义脚本层)          - GM命令、自定义功能、逻辑重写
+_DPS_/_BuiltProject/ (内置功能层)      - 团本系统、装备系统、交易系统等
+_DPS_/_Core/ (核心框架层)               - BaseClass类库、回调系统、钩子系统
+Native C++ 服务器 (游戏原生代码)        - 原生游戏逻辑
+```
+
+### 核心类体系
+- User: 玩家对象核心类
+- GameManager: 游戏管理器
+- Packet Dungeon: 副本对象类
+- Mysql/MysqlPool: 数据库连接池
+- Timer: 定时器类
+- NativePointer: 内存操作类
+
+---
+
+## 📐 官方模块开发规范
+
+### OfficialProject/ 目录规范
+
+**OfficialProject** 是官方功能模块目录，包含标准化的服务器功能模块。
+
+#### 已有官方模块列表
+| 模块名称 | 功能描述 | 配置文件 |
+|----------|----------|----------|
+| 二狗宝珠继承 | 装备宝珠属性继承系统 | 无 |
+| 交易邮件播报 | 交易和邮件系统播报 | 交易邮件播报.json |
+| 任务清除卷 | 任务相关功能 | 任务相关配置_南瓜.json |
+| 副本播报 | 副本通关/放弃播报 | 副本播报配置_Nangua.json |
+| 史诗掉落奖励 | 史诗/神器/稀有掉落奖励 | 史诗掉落奖励配置_南瓜.json |
+| 心悦播报 | 心悦会员登录播报 | 心悦播报配置_Nangua.json |
+| 战力榜 | 战力排行榜功能 | 战力榜配置_南瓜.json |
+| 杂项功能 | 多种游戏功能开关 | 杂项功能开关_Nangua.json |
+| 根据任务进入不同副本 | 任务控制副本进入 | 根据任务进入不同副本_Lenheart.json |
+| 深渊爆率实时控制 | 深渊爆率调整 | 深渊爆率实时控制_Nangua.json |
+| 独立掉落 | 自定义掉落系统 | 无 |
+| 自动刷新GM工具的邮件 | GM工具邮件管理 | 无 |
+| 装备镶嵌与时装镶嵌 | 装备和时装镶嵌扩展 | 装备镶嵌与时装镶嵌_Lenheart.json |
+| 记录服务器聊天内容 | 聊天内容记录 | 无 |
+| 门票进入副本 | 门票控制副本进入 | 门票进入副本配置_Maomi.json |
+
+#### OfficialConfig/ 目录规范
+
+**OfficialConfig** 是官方配置文件目录，存储所有官方模块的配置。
+
+##### 配置文件命名规范
+```
+功能名称.json                # 通用配置
+功能名称_服务器名.json       # 服务器特定配置
+功能名称_管理员昵称.json    # 管理员自定义配置
+```
+
+##### 通用配置结构
+```json
+{
+    "功能配置": {
+        "开关控制": true,
+        "提示信息": "这是提示信息",
+        "配置项1": "值1",
+        "配置项2": ["数组值1", "数组值2"],
+        "配置项3": {
+            "子项1": "子值1",
+            "子项2": "子值2"
+        }
+    },
+    "数据库配置": {
+        "IP": "127.0.0.1",
+        "端口": 3306,
+        "用户名": "game",
+        "密码": "password"
+    }
+}
+```
+
+---
+
+## 🏢 官方模块开发模式
+
+### 标准模块结构
+
+OfficialProject/ 目录下的每个模块应遵循以下结构：
+
+```
+功能模块名/
+├── 功能模块名.nut          # 主脚本文件
+└── Proj.ifo                  # 项目信息文件（可选）
+```
+
+#### 主脚本文件模板
+```nut
+/*
+文件名:功能模块名.nut
+路径:OfficialProject/功能模块名/功能模块名.nut
+创建日期:YYYY-MM-DD HH:MM
+文件用途:功能模块描述
+*/
+
+function _功能模块名_Main_() {
+    // 加载配置
+    local config = GlobalConfig.Get("功能模块名配置.json");
+    
+    // 读取配置开关
+    if (config["功能配置"]["开关控制"]) {
+        // 执行功能初始化
+        
+        // 注册回调
+        RegisterCallbacks();
+        
+        // 初始化数据
+        InitData();
+    }
+    
+    // 注册回调和钩子
+    function RegisterCallbacks() {
+        // 注册GM命令
+        Gm_InputFunc_Handle["命令名"] <- function(SUser, CmdString) {
+            // 命令处理逻辑
+        }.bindenv(this);
+        
+        // 注册事件回调
+        Cb_reach_game_world_Func["功能模块名"] <- function(SUser) {
+            // 事件处理逻辑
+        }.bindenv(this);
+        
+        // 注册Hook回调
+        Cb_HookName_Enter_Func["功能模块名"] <- function(args) {
+            // Hook处理逻辑
+            return value;
+        }.bindenv(this);
+    }
+    
+    // 初始化数据
+    function InitData() {
+        // 初始化数据库表
+        // 加载初始数据
+    }
+}
+```
+
+### 配置文件管理
+
+#### 读取配置
+```nut
+// 读取配置文件
+local config = GlobalConfig.Get("配置文件名.json");
+
+// 访问配置项
+local switchState = config["功能配置"]["开关控制"];
+local someValue = config["功能配置"]["配置项1"];
+local arrayValue = config["功能配置"]["配置项2"][0];
+```
+
+#### 配置热重载
+```nut
+// 在Main.nut中注册重载函数
+GlobalOfficial_Project.ReloadProjectMap <- {
+    "配置文件名" = "_功能模块名_Main_"
+};
+
+// 重载函数
+function _功能模块名_Main_(OldConfig) {
+    // 使用旧配置清理资源（如果有）
+    if (OldConfig) {
+        // 清理逻辑
+    }
+    
+    // 重新加载配置
+    local config = GlobalConfig.Get("配置文件名.json");
+    
+    // 重新初始化
+    // ...
+}
+```
+
+### 官方模块最佳实践
+
+#### 1. 战力榜模块模式
+```nut
+// 获取战力值
+function GetRankNumber(charac_no) {
+    local Config = GlobalConfig.Get("战力榜配置_服务器名.json");
+    local currentDB = Config["战力榜配置"]["当前选择"];
+    local dbConfig = Config["战力榜配置"]["数据库选择"][currentDB];
+    
+    local SqlObj = MysqlPool.GetInstance().GetConnect();
+    local query = "SELECT " + dbConfig["字段名"] + 
+                  " FROM " + dbConfig["数据库名"] + "." + dbConfig["表名"] + 
+                  " WHERE " + dbConfig["条件字段"] + "=" + charac_no;
+    
+    local result = SqlObj.Select(query, ["string"]);
+    MysqlPool.GetInstance().PutConnect(SqlObj);
+    
+    if (result.len() > 0) {
+        return result[0][0].tointeger();
+    }
+    return 0;
+}
+```
+
+#### 2. 副本播报模块模式
+```nut
+// 配置驱动的播报系统
+function ReportDungeonClear(SUser, dgnName, timeUsed, monsterCount) {
+    local config = GlobalConfig.Get("副本播报配置_服务器名.json");
+    
+    // 检查开关
+    if (!config["副本播报开关"]) return;
+    
+    // 检查排除列表
+    local excludeDgns = config["不需要播报的副本ID"];
+    local excludeCIDs = config["指定角色CID不播报"];
+    
+    if (excludeDgns.find(dgnName) != null) return;
+    if (excludeCIDs.find(SUser.GetCID()) != null) return;
+    
+    // 构建播报消息
+    local msg = format(config["通关播报信息"],
+        SUser.GetCharacName(),
+        dgnName,
+        GetDungeonDifficulty(dgnName),
+        timeUsed,
+        monsterCount
+    );
+    
+    // 发送播报
+    AdMsg().PutEquipment(msg, config["发送信息位置"]);
+}
+```
+
+#### 3. 杂项功能模块模式
+```nut
+// 多功能开关控制
+function _杂项功能_Main_() {
+    local config = GlobalConfig.Get("杂项功能开关_服务器名.json");
+    
+    // 功能1: 设置最大等级
+    if (config["杂项功能开关"]["设置最高等级"][0]) {
+        local level = config["杂项功能开关"]["设置最高等级"][1];
+        GameManager.SetGameMaxLevel(level);
+    }
+    
+    // 功能2: 装备解锁时间
+    if (config["杂项功能开关"]["装备解锁(单位:秒)"][0]) {
+        local time = config["杂项功能开关"]["装备解锁(单位:秒)"][1];
+        GameManager.SetItemLockTime(time);
+    }
+    
+    // 功能3: 创建缔造者
+    if (config["杂项功能开关"]["创建缔造者"]) {
+        GameManager.OpenCreateJob_CreatorMage();
+    }
+    
+    // Hook回调和Leave Hook返回值拦截
+    Cb_Item_IsBanRedeemItem_Leave_Func.BanRedeemItem <- function(args) {
+        if (config["杂项功能开关"]["关闭商店回购"]) {
+            return 1; // 返回1拦截默认行为
+        }
+    }
+}
+```
+
+#### 4. 史诗掉落奖励模块模式
+```nut
+// 配置驱动的奖励系统
+function GiveEpicReward(SUser, epicCount) {
+    local config = GlobalConfig.Get("史诗掉落奖励配置_服务器名.json");
+    
+    // 检查开关
+    if (!config["奖励控制"]["多件史诗奖励控制开关"]) return;
+    
+    // 获取奖励配置
+    local rewardConfig = config["奖励控制"]["多件SS对应奖励"][epicCount.tostring()];
+    
+    if (rewardConfig) {
+        foreach(reward in rewardConfig) {
+            local itemId = reward[0];
+            local quantity = reward[1];
+            
+            if (itemId == 0) {
+                // 点券
+                SUser.RechargeCera(quantity);
+            } else {
+                // 道具
+                SUser.GiveItem(itemId, quantity);
+            }
+        }
+        
+        // 发送播报
+        local title = config["信息播报"]["标题"];
+        local contentColor = config["信息播报"]["内容颜色"];
+        local ending = config["信息播报"]["结尾"];
+        
+        AdMsg().PutEquipment(title, 14);
+        AdMsg().PutEquipment(ending, 14);
+    }
+}
+```
+
+#### 5. 心悦播报模块模式
+```nut
+// 任务驱动的播报系统
+function CheckXinyueStatus(SUser) {
+    local config = GlobalConfig.Get("心悦播报配置_服务器名.json");
+    local xinyueConfig = config["心悦播报配置"]["心悦会员登录播报"];
+    
+    // 检查开关
+    if (!xinyueConfig["开关"]) return;
+    
+    // 检查任务完成情况
+    local taskConfigs = config["心悦播报配置"]["任务等级配置"];
+    foreach(taskConfig in taskConfigs) {
+        local taskId = taskConfig["任务ID"];
+        
+        if (SUser.CheckQuest(taskId)) {
+            // 构建播报消息
+            local msg = format("%s[%s]%s%s",
+                xinyueConfig["标题"],
+                taskConfig["心悦等级"],
+                SUser.GetCharacName(),
+                xinyueConfig["结尾信息内容"]
+            );
+            
+            // 发送播报
+            AdMsg().PutEquipment(msg, xinyueConfig["信息播报发送位置"]);
+            break;
+        }
+    }
+}
+```
+
+### 游戏管理器常用方法
+
+```nut
+// 设置游戏最大等级
+GameManager.SetGameMaxLevel(85);
+
+// 设置装备解锁时间（秒）
+GameManager.SetItemLockTime(1);
+
+// 开启缔造者创建
+GameManager.OpenCreateJob_CreatorMage();
+
+// 自动解除魔法封印
+GameManager.OpenRandomAutomaticUnblocking();
+
+// 开启装备与时装镶嵌
+GameManager.FixEquipUseJewel();
+
+// 修复下线卡城镇
+GameManager.FixSaveTown();
+
+// 修复绝望之塔金币异常
+GameManager.FixDespairGold();
+
+// 设置每日可交易金币上限
+GameManager.FixGlodTradeDaily(50000000);
+
+// 强化13以上免刷新
+GameManager.Fix_13Upgrade();
+
+// 开启14格技能栏
+GameManager.Fix14Skill();
+
+// 修复拍卖行消耗品上架
+GameManager.Fix_Auction_Regist_Item();
+
+// 设置副本内可丢弃物品品级
+GameManager.FixDungeonDropGrade(3);
+
+// 修复邮件验证
+GameManager.FixEmailRemovalVerification();
+```
+
+### 公告系统配置
+
+```nut
+// 登录器配置示例
+{
+    "noticeclass": ["公告", "活动", "玩法"],
+    "notice": [
+        {
+            "type": "img",
+            "category": 1,
+            "text": "公告标题",
+            "link": "https://example.com",
+            "content": "http://192.168.200.25:3000/image.png"
+        },
+        {
+            "type": "link",
+            "category": 1,
+            "text": "链接标题",
+            "link": "https://example.com"
+        }
+    ],
+    "scriptMd5": "",
+    "pluginsMd5": [],
+    "updateUrl": "www.baidu.com"
+}
+```
+
+---
+
+## 🔧 钩子系统
+
+### Hook 注册方法
+```nut
+// 步骤1: 声明回调表
+Cb_HookName_Enter_Func <- {};
+Cb_HookName_Leave_Func <- {};
+
+// 步骤2: 注册Hook
+_Hook_Register_Currency_Func_(
+    "0x内存地址", 
+    ["参数类型数组"], 
+    Cb_HookName_Enter_Func, 
+    Cb_HookName_Leave_Func
+);
+
+// 步骤3: 添加处理函数
+Cb_HookName_Enter_Func["模块名"] <- function(args) {
+    local SUser = User(args[0]); // args是参数数组
+    // 处理逻辑
+    return value; // 可返回null或修改后的值
+}.bindenv(this);
+```
+
+### 常用钩子点
+| 钩子名称 | 触发时机 | 参数说明 |
+|----------|----------|----------|
+| Cb_reach_game_world | 玩家进入游戏世界 | (C_User) |
+| Cb_player_exit | 玩家下线 | (C_User) |
+| Cb_User_Insert_Item | 玩家获得道具 | (C_User, ItemId, 数量, ...) |
+| Cb_Move_Area | 玩家区域移动 | (C_User, TownIndex, AreaIndex) |
+| Cb_base_input | 玩家普通输入 | (C_User, CmdString) |
+| Cb_gm_input | GM命令输入 | (C_User, CmdString) |
+| Cb_Use_Item_Sp | 特殊道具使用 | (C_User, ItemId) |
+| Cb_CInventory_ChangeEquip | 切换装备 | (C_User, EquipSlot) |
+| Cb_CParty_OnKillMonster | 击杀怪物 | (C_Party, C_User, MonsterId) |
+
+---
+
+## 📡 回调系统
+
+### 回调注册模式
+```nut
+// 简单回调
+if (!("Cb_event_name_Func" in getroottable())) Cb_event_name_Func <- {};
+
+Cb_event_name_Func["模块名"] <- function(SUser) {
+    // 处理逻辑
+}.bindenv(this);
+```
+
+### 常用回调类型
+```nut
+// 玩家上线
+Cb_reach_game_world_Func["模块名"] <- function(SUser) {
+    local name = SUser.GetCharacName();
+    local level = SUser.GetCharacLevel();
+}
+
+// 玩家下线
+Cb_player_exit_Func["模块名"] <- function(SUser) {
+    // 清理玩家数据
+}
+
+// 每帧执行
+Cb_timer_dispatch_Func["模块名"] <- function() {
+    // 每帧执行逻辑
+}
+
+// 副本通关
+Cb_ClearDungeon_Enter_Func["模块名"] <- function(args) {
+    local SUser = User(args[0]);
+    // 奖励处理
+}
+```
+
+---
+
+## 💻 GM 命令开发
+
+### 基本命令注册
+```nut
+Gm_InputFunc_Handle["命令名"] <- function(SUser, CmdString) {
+    // 参数解析
+    local handler = [];
+    local pos = 0;
+    do {
+        local start = pos;
+        pos = CmdString.find(" ", pos + 1);
+        if (pos != null) {
+            handler.append(CmdString.slice(start + 1, pos));
+        } else
+            handler.append(CmdString.slice(start + 1));
+    } while (pos != null);
+    
+    // 业务逻辑
+    if (handler.len() >= 1) {
+        local itemId = handler[1].tointeger();
+        local quantity = (handler.len() >= 2) ? handler[2].tointeger() : 1;
+        SUser.GiveItem(itemId, quantity);
+        SUser.SendNotiPacketMessage("道具已发放", 8);
+    }
+}
+```
+
+### 快捷命令
+```nut
+Gm_InputFunc_Handle["满级"] <- function(SUser, CmdString) {
+    SUser.SetCharacLevel(85);
+    SUser.SendNotiPacketMessage("已满级", 8);
+}
+
+Gm_InputFunc_Handle["回城"] <- function(SUser, CmdString) {
+    SUser.ChangeTown(0, 1, 0, 0); // 城镇, 区域, X, Y
+}
+```
+
+---
+
+## 🗄️ 数据库操作
+
+### 基本查询
+```nut
+// 单连接模式
+MysqlObject = Mysql(Str_Ptr("127.0.0.1"), 3306, 
+    Str_Ptr("数据库名"), Str_Ptr("账号"), Str_Ptr("密码"));
+MysqlObject.Exec_Sql("SET NAMES 'latin1'");
+
+// 查询
+local Ret = MysqlObject.Select("SELECT id, name, level FROM users WHERE id = " + uid, 
+    ["int", "string", "int"]);
+foreach(Row in Ret) {
+    local id = Row[0];
+    local name = Row[1];
+    local level = Row[2];
+}
+
+// 插入/更新
+MysqlObject.Exec_Sql(format("UPDATE users SET level = %d WHERE id = %d", newLevel, id));
+
+// 获取自增ID
+MysqlObject.Exec_Sql("INSERT INTO users (name) VALUES ('test')");
+local Ret = MysqlObject.Select("SELECT LAST_INSERT_ID()", ["int"]);
+local newId = Ret[0][0];
+```
+
+### 连接池模式
+```nut
+// 获取连接
+local SqlObj = MysqlPool.GetInstance().GetConnect();
+
+// 查询
+local Ret = SqlObj.Select("SELECT * FROM table", ["int", "string"]);
+foreach(row in Ret) {
+    // 处理数据
+}
+
+// 执行
+SqlObj.Exec_Sql("UPDATE table SET field = value");
+
+// 归还连接
+MysqlPool.GetInstance().PutConnect(SqlObj);
+```
+
+---
+
+## 🎒 装备操作
+
+### 装备基本操作
+```nut
+local InvenObj = SUser.GetInven();
+
+// 获取装备
+local Equip = InvenObj.GetSlot(Inven.INVENTORY_TYPE_BODY, 槽位);
+ifif (!Equip) return;
+
+// 读取属性
+local upgrade = Equip.GetUpgrade();        // 强化等级
+local amplification = Equip.GetAmplification(); // 增幅等级
+local enchanting = Equip.GetEnchanting();   // 附魔ID
+local forging = Equip.GetForging();        // 镶嵌数据
+local itemId = Equip.GetIndex();           // 道具ID
+
+// 修改属性
+Equip.SetUpgrade(12);
+Equip.SetAmplification(3);
+Equip.SetEnchanting(1001);
+Equip.Flush(); // 必须调用
+
+// 刷新客户端
+SUser.SendUpdateItemList(1, 3, 槽位);
+```
+
+### 装备继承模式
+```nut
+// 读取源装备属性
+local sourceEquip = InvenObj.GetSlot(Inven.INVENTORY_TYPE_ITEM, 9);
+local forging = sourceEquip.GetForging();
+local upgrade = sourceEquip.GetUpgrade();
+local amplification = sourceEquip.GetAmplification();
+local enchanting = sourceEquip.GetEnchanting();
+
+// 应用到目标装备
+local targetEquip = InvenObj.GetSlot(Inven.INVENTORY_TYPE_BODY, 10);
+targetEquip.SetForging(forging);
+targetEquip.SetUpgrade(upgrade);
+targetEquip.SetAmplification(amplification);
+targetEquip.SetEnchanting(enchanting);
+targetEquip.Flush();
+
+// 刷新客户端
+SUser.SendUpdateItemList(1, 0, 9);
+SUser.SendUpdateItemList(1, 3, 10);
+```
+
+---
+
+## ⏰ 定时器系统
+
+### 延迟任务
+```nut
+// 延迟执行（单位：游戏tick，60tick≈1秒）
+Timer.SetTimeOut(function() {
+    SUser.SendNotiPacketMessage("延迟执行", 8);
+}, 300); // 5秒后执行
+
+// 带参数的延迟执行
+Timer.SetTimeOut(function(arg1, arg2) {
+    print("参数1: " + arg1 + ", 参数2: " + arg2);
+}, 300, "hello", 123);
+```
+
+### 定时任务
+```nut
+// 移除旧任务
+Timer.RemoveCronTask("任务名称");
+
+// 创建定时任务
+Timer.SetCronTask(function() {
+    // 定时执行的代码
+    print("定时任务执行");
+    return true; // 返回false取消下次执行
+}.bindenv(this), {
+    Cron = "0 */5 * * * *", // Cron表达式：每5分钟
+    Name = "任务名称"
+});
+
+// Cron表达式格式：秒 分 时 日 月 周
+// 示例：
+// "0 0 * * * *"      - 每小时
+// "0 */5 * * * *"    - 每5分钟
+// "0 0 0 * * *"      - 每天0点
+```
+
+---
+
+## 🔍 内存操作
+
+### 基本读写
+```nut
+// 写入操作
+NativePointer("0x8360C38").add(3).writeU8(MaxLevel);
+NativePointer("0x081E907E").writeInt(value);
+
+// 读取操作
+local value = NativePointer("0x8360C38").add(3).readS8();
+local value = NativePointer(address).readInt();
+local value = NativePointer(address).readPointer();
+local str = NativePointer(address).readUtf8String();
+```
+
+### 字节数组操作
+```nut
+// 读取字节数组
+local arr = NativePointer(address).readByteArray(size);
+
+// 写入字节数组（内存补丁）
+Sq_WriteByteArr(S_Ptr("0x081E907E"), [0x90, 0x90, 0x90, 0x90, 0x90]);
+```
+
+### 原生函数调用
+```nut
+// 调用原生函数
+local result = Sq_CallFunc(
+    S_Ptr("0x082947A4"),  // 函数地址
+    "pointer",            // 返回类型
+    ["pointer", "int"],    // 参数类型
+    arg1, arg2             // 参数值
+);
+
+// 常用原生函数
+Sq_CallFunc(S_Ptr("0x0858EFDE"), "int", ["pointer", "pointer", "int"], 
+    S_Ptr("0x0"), SUser.C_Object, newLevel);
+```
+
+---
+
+## 🏗️ 模块开发模板
+
+### 标准模块结构
+```nut
+/*
+文件名:模块名.nut
+路径:MyProject/模块名.nut
+创建日期:2026-03-16 HH:MM
+文件用途:模块功能描述
+*/
+
+Timer.SetTimeOut(function() {
+    // 创建模块实例并挂载到根表
+    getroottable()._模块名_ <- ModuleClass();
+    print("模块名 - 已加载");
+}, 1);
+
+class ModuleClass {
+    MysqlObject = null;
+    data = null;
+    
+    constructor() {
+        // 初始化数据库
+        MysqlObject = Mysql(Str_Ptr("127.0.0.1"), 3306, 
+            Str_Ptr("数据库名"), Str_Ptr("账号"), Str_Ptr("密码"));
+        
+        // 初始化数据
+        data = {};
+        
+        // 注册回调
+        RegisterCallbacks();
+        
+        // 初始化数据
+        InitData();
+    }
+    
+    function RegisterCallbacks() {
+        // 注册GM命令
+        Gm_InputFunc_Handle["模块命令"] <- function(SUser, CmdString) {
+            // 命令处理
+        }.bindenv(this);
+        
+        // 注册事件回调
+        Cb_reach_game_world_Func["模块名"] <- function(SUser) {
+            // 玩家上线处理
+        }.bindenv(this);
+        
+        // 注册Hook回调
+        Cb_HookName_Enter_Func["模块名"] <- function(args) {
+            // Hook处理
+        }.bindenv(this);
+    }
+    
+    function InitData() {
+        // 初始化配置和数据
+        try {
+            MysqlObject.Exec_Sql("CREATE TABLE IF NOT EXISTS table_name (...)");
+            print("数据表初始化成功");
+        } catch (exception) {
+            print("数据表初始化失败");
+        }
+    }
+    
+    function SaveData() {
+        // 保存数据到数据库
+    }
+    
+    function LoadData() {
+        // 从数据库加载数据
+    }
+}
+```
+
+---
+
+## 🐛 调试与测试
+
+### 调试命令
+```
+// 在游戏中输入
+T                      // 显示当前玩家调试信息
+ResetScript            // 重载所有脚本
+```
+
+### 调试输出
+```nut
+// 启用调试模式
+getroottable().DebugModelFlag <- true;
+
+// 启用包调试
+getroottable().PacketDebugModel <- true;
+
+// 输出调试信息
+print("调试信息: " + value);
+
+// 输出表格
+printT(TableObject);
+
+// 查看回调注册
+print(Cb_reach_game_world_Func);
+```
+
+### 错误处理
+```nut
+try {
+    // 可能失败的操作
+    local result = SomeOperation();
+} catch (exception) {
+    print("Error: " + exception);
+    if (SUser) {
+        SUser.SendNotiPacketMessage("操作失败", 8);
+    }
+}
+
+// 数据验证
+if (!SUser) return;
+if (!InvenObj) return;
+if (!Equip) return;
+```
+
+---
+
+## 📋 常见任务清单
+
+### 任务1: 添加GM命令
+- 创建命令处理函数
+- 解析参数
+- 实现功能逻辑
+- 发送反馈消息
+
+### 任务2: 监听游戏事件
+- 确定事件类型
+- 找到对应回调表
+- 注册处理函数
+- 处理事件数据
+
+### 任务3: 修改游戏配置
+- 找到配置内存地址
+- 使用NativePointer写入
+- 测试修改效果
+
+### 任务4: 创建自定义道具
+- 注册道具使用回调
+- 实现道具效果
+- 验证和反馈
+
+### 任务5: 实现新功能模块
+- 创建类结构
+- 初始化数据库
+- 注册回调和Hook
+- 实现业务逻辑
+- 添加定时任务
+
+---
+
+## 🎓 开发建议
+
+### 通用开发规范
+1. **命名规范**: 使用 `_模块名_` 作为全局表前缀，避免冲突
+2. **延迟加载**: 使用 `Timer.SetTimeOut` 避免初始化顺序问题
+3. **错误处理**: 关键操作使用 try-catch 包裹
+4. **内存管理**: 及时删除 Packet 对象，释放内存
+5. **数据验证**: 检查 `rawin()` 和对象有效性
+6. **性能优化**: 高频查询使用连接池，定时任务批量保存
+7. **代码注释**: 添加文件头注释说明用途
+8. **版本检查**: 使用 `DP_S_VERSION` 判断服务器版本
+
+### OfficialProject 开发规范
+
+#### 1. 模块命名
+- 使用中文命名，清晰表达功能
+- 避免使用特殊字符和空格
+- 示例: `杂项功能`, `战力榜`, `副本播报`
+
+#### 2. 文件结构
+- 主脚本文件名与目录名一致
+- 必须包含标准文件头注释
+- 配置文件放在 OfficialConfig/ 目录
+
+#### 3. 主函数命名
+- 使用 `_模块名_Main_` 格式
+- 用于模块初始化和重载
+- 示例: `_杂项功能_Main_()`, `_战力榜_Main_()`
+
+#### 4. 配置管理
+- 使用 GlobalConfig.Get() 读取配置
+- 配置文件使用 JSON 格式
+- 支持配置热重载
+
+#### 5. Hook 回调命名
+- 使用 `模块名.功能名` 格式
+- 示例: `杂项功能.BanRedeemItem`, `战力榜.UpdateRank`
+
+#### 6. 数据库操作
+- 使用连接池模式
+- 使用 try-catch 处理异常
+- 及时归还连接
+
+#### 7. 播报系统
+- 使用 AdMsg() 类发送公告
+- 支持富文本和链接
+- 注意公告频率控制
+
+### OfficialConfig 开发规范
+
+#### 1. 配置文件命名
+- `功能名.json` - 通用配置
+- `功能名_服务器名.json` - 服务器特定配置
+- `功能名_管理员昵称.json` - 管理员自定义配置
+
+#### 2. JSON 结构规范
+- 使用中文键名，提高可读性
+- 包含必要的注释字段（如 "提示", "说明"）
+- 支持嵌套结构
+
+#### 3. 数据库配置
+- 使用单独的配置节
+- 包含 IP、端口、用户名、密码
+- 提供默认值和提示
+
+#### 4. 开关控制
+- 使用布尔值控制功能开关
+- 数组类型的配置使用 `[开关, 值]` 格式
+- 提供清晰的说明
+
+#### 5. 排除列表
+- 使用数组存储排除项
+- 支持 CID、道具ID、副本ID 等
+- 提供注释说明如何获取
+
+---
+
+## 📞 快速参考
+
+### User常用方法
+- GetArea(), GetLocation(), GetUID(), GetCID()
+- GetCharacLevel(), SetCharacLevel()
+- GetCharacName(), GetCharacJob()
+- GiveItem(itemId, quantity)
+- SendNotiPacketMessage(msg, type)
+- ChangeTown(town, area, x, y)
+
+### Packet方法
+- Put_Header(op, sub), Put_Int(v), Put_Str(s)
+- Send(SUser)
+
+### 数据类型
+- 整数: `tointeger()`
+- 字符串: `tostring()`
+- 布尔: `true` / `false`
+- 表: `{key = value}`
+- 数组: `[value1, value2]`

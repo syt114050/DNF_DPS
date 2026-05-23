@@ -1,0 +1,11 @@
+{
+    "ProjectName": "进入副本自动修理装备",
+    "ProjectDescribe": "进入副本时自动修理穿戴栏的装备耐久度,可设置持有指定契约才修理",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.1,
+    "ProjectConfig": "自动修理装备配置_nangua.json",
+    "ProjectFiles": [
+        "进入副本自动修理装备.nut"
+    ],
+    "ProjectRunFunc": "_Dps_RepairEquipment_Main_"
+}

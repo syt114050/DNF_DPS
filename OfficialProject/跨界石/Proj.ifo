@@ -1,0 +1,11 @@
+{
+    "ProjectName": "跨界石",
+    "ProjectDescribe": "通过指定ID的道具，将装备背包第一格的装备跨界。\n配置中修改CrossoverId可修改跨界石的ID 修改NoCrossIdArr可增加不可跨界的ID。",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.4,
+    "ProjectConfig": "跨界石_Lenheart.json",
+    "ProjectFiles": [
+        "跨界石.nut"
+    ],
+    "ProjectRunFunc": "_Dps_CrossBorderStones_Main_"
+}

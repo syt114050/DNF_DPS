@@ -1,0 +1,11 @@
+{
+    "ProjectName": "史诗掉落奖励",
+    "ProjectDescribe": "获取指定数量获得奖励以及指定道具获得奖励",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.1,
+    "ProjectConfig": "史诗掉落奖励配置_南瓜.json",
+    "ProjectFiles": [
+        "史诗掉落奖励.nut"
+    ],
+    "ProjectRunFunc": "_Dps_SSDL_nangua_Main_"
+}

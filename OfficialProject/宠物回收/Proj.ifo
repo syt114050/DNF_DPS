@@ -1,0 +1,11 @@
+{
+    "ProjectName": "宠物回收",
+    "ProjectDescribe": "使用宠物回收卷，将宠物栏指定格子内的宠物按配置规则回收为奖励道具",
+    "ProjectAuthor": "噜啦噜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "宠物回收配置.json",
+    "ProjectFiles": [
+        "宠物回收.nut"
+    ],
+    "ProjectRunFunc": "_Dps_PetRecycle_Main_"
+}

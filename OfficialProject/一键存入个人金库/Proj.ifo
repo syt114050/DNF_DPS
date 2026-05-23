@@ -1,0 +1,11 @@
+{
+    "ProjectName": "一键存入个人金库",
+    "ProjectDescribe": "使用之前,请务必保证安装了群内的 \"客户端消息框233.dll\" 插件,这个插件放入你客户端的插件加载目录即可,在游戏中输入 //yjcc 即可一键存入个人金库,也可以在游戏中的快捷喊话中添加为快捷键  配置中可更改 yjcc 关键字",
+    "ProjectAuthor": "倾泪寒 & 南瓜",
+    "ProjectVersion": 1.3,
+    "ProjectConfig": "一键存入个人金库_Lenheart.json",
+    "ProjectFiles": [
+        "一键入库.nut"
+    ],
+    "ProjectRunFunc": "_Dps_OneClickStorage_Main_"
+}

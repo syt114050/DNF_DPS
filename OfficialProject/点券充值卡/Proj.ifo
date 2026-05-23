@@ -1,0 +1,11 @@
+{
+    "ProjectName": "点券充值卡",
+    "ProjectDescribe": "根据道具ID充值对应的点券数量",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "点券充值卡配置_Nangua.json",
+    "ProjectFiles": [
+        "点券充值卡.nut"
+    ],
+    "ProjectRunFunc": "_Dps_handleCeraCard_Main_"
+}

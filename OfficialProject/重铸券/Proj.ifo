@@ -1,0 +1,11 @@
+{
+    "ProjectName": "重铸券",
+    "ProjectDescribe": "使用过后删除装备栏第一格的物品并重新发送一件",
+    "ProjectAuthor": "倾泪寒",
+    "ProjectVersion": 1.0,
+    "ProjectConfig": "重铸券.json",
+    "ProjectFiles": [
+        "重铸券.nut"
+    ],
+    "ProjectRunFunc": "_Dps_ReforgeEquipment_Main_"
+}

@@ -1,0 +1,11 @@
+{
+    "ProjectName": "整点在线奖励",
+    "ProjectDescribe": "可以设置某一个时间点 全服发放奖励",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.3,
+    "ProjectConfig": "整点在线奖励_Lenheart.json",
+    "ProjectFiles": [
+        "整点在线奖励.nut"
+    ],
+    "ProjectRunFunc": "_Dps_TimeReward_Main_"
+}

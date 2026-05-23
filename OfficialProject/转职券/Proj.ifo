@@ -1,0 +1,11 @@
+{
+    "ProjectName": "转职券",
+    "ProjectDescribe": "按官方的转职券来写，转职券道具可以复制 主线完成券 一类。",
+    "ProjectAuthor": "zz",
+    "ProjectVersion": 1.1,
+    "ProjectConfig": "转职券.json",
+    "ProjectFiles": [
+        "转职券.nut"
+    ],
+    "ProjectRunFunc": "_Dps_CLASS_CHANGE_Main_"
+}

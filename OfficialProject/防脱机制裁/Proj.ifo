@@ -1,0 +1,11 @@
+{
+    "ProjectName": "防脱机制裁",
+    "ProjectDescribe": "本项目只能够防止脱机外挂,配置可以更改",
+    "ProjectAuthor": "南瓜",
+    "ProjectVersion": 1.7,
+    "ProjectConfig": "防脱机制裁_Nangua.json",
+    "ProjectFiles": [
+        "防脱机制裁.sut"
+    ],
+    "ProjectRunFunc": "_Dps_AntiOfflineSanctions_Main_"
+}
